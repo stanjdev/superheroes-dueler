@@ -1,8 +1,10 @@
+# https://github.com/Tech-at-DU/Superhero-Team-Dueler
+
 class Dog:
   def __init__(self, name, breed):
       self.name = name
       self.breed = breed
-      print("dog inits!")
+      print("dog initialized!")
 
   def bark(self):
     print("WOOF!")
