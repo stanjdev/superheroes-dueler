@@ -50,10 +50,10 @@ class Hero:
     self.deaths += num_deaths
 
   def fight(self, opponent):
-    # if len(self.abilities) < 1 or len(opponent.abilities) < 1: 
-    #   # At least one hero doesn't have abilities. Not fair.
-    #   print("Draw. At least one hero doesn't have abilities.")
-    #   return
+    if len(self.abilities) < 1 or len(opponent.abilities) < 1: 
+      # At least one hero doesn't have abilities. Not fair.
+      print("Draw. At least one hero doesn't have abilities.")
+      return [None, None] # No winner or loser. List to be extracted by team.attack() method
     fighting = True
     while fighting:
       self.take_damage(opponent.attack()) # decrement health
@@ -65,13 +65,14 @@ class Hero:
         opponent.add_death(1)
         print('Draw! Both heroes are defeated.')
         fighting = False
+        return [None, None] # No winner or loser. List to be extracted by team.attack() method
       elif not self.is_alive() or not opponent.is_alive():
         winner = self if self.is_alive() else opponent
         loser = opponent if self.is_alive() else self
         winner.add_kill(1)
         loser.add_death(1)
-        print(self.name, self.current_health)
-        print(opponent.name, opponent.current_health)
+        # print(self.name, self.current_health)
+        # print(opponent.name, opponent.current_health)
         print(f"{winner.name} won!")
         fighting = False
         return [winner, loser]
