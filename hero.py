@@ -10,6 +10,8 @@ class Hero:
     self.name = name
     self.starting_health = starting_health
     self.current_health = starting_health
+    self.deaths = 0
+    self.kills = 0
   
   def add_weapon(self, weapon):
     """ Add weapon to self.abilities """
@@ -41,24 +43,38 @@ class Hero:
   def is_alive(self):
     return self.current_health > 0
 
+  def add_kill(self, nums_kills):
+    self.kills += nums_kills
+
+  def add_death(self, num_deaths):
+    self.deaths += num_deaths
+
   def fight(self, opponent):
-    if len(self.abilities) < 1 or len(opponent.abilities) < 1: 
-      # At least one hero doesn't have abilities. Not fair.
-      print("Draw")
-      return
+    # if len(self.abilities) < 1 or len(opponent.abilities) < 1: 
+    #   # At least one hero doesn't have abilities. Not fair.
+    #   print("Draw. At least one hero doesn't have abilities.")
+    #   return
     fighting = True
     while fighting:
       self.take_damage(opponent.attack()) # decrement health
       opponent.take_damage(self.attack()) # decrement health
       if not self.is_alive() and not opponent.is_alive():
+        self.add_kill(1)
+        self.add_death(1)
+        opponent.add_kill(1)
+        opponent.add_death(1)
         print('Draw! Both heroes are defeated.')
         fighting = False
       elif not self.is_alive() or not opponent.is_alive():
-        winner = self.name if self.is_alive() else opponent.name
+        winner = self if self.is_alive() else opponent
+        loser = opponent if self.is_alive() else self
+        winner.add_kill(1)
+        loser.add_death(1)
         print(self.name, self.current_health)
         print(opponent.name, opponent.current_health)
-        print(f"{winner} won!")
+        print(f"{winner.name} won!")
         fighting = False
+        return [winner, loser]
 
 
     
@@ -101,19 +117,24 @@ if __name__ == "__main__":
   # print(hero.current_health)
 
 
-  # hero1 = Hero("Wonder Woman", 300)
-  # hero2 = Hero("Dumbledore", 250)
-  # ability1 = Ability("Super Speed", 300)
-  # ability2 = Ability("Laser Eyes", 130)
-  # ability3 = Ability("Wizard Wand", 180)
-  # ability4 = Ability("Super Beard", 120)
-  # hero1.add_ability(ability1)
-  # hero1.add_ability(ability2)
-  # hero2.add_ability(ability3)
-  # hero2.add_ability(ability4)
-  # hero1.fight(hero2)
+  hero1 = Hero("Wonder Woman", 300)
+  hero2 = Hero("Dumbledore", 250)
+  ability1 = Ability("Super Speed", 300)
+  ability2 = Ability("Laser Eyes", 130)
+  ability3 = Ability("Wizard Wand", 180)
+  ability4 = Ability("Super Beard", 120)
+  hero1.add_ability(ability1)
+  hero1.add_ability(ability2)
+  hero2.add_ability(ability3)
+  hero2.add_ability(ability4)
+  hero1.fight(hero2)
+  print(hero1.kills)
+  print(hero1.deaths)
+  print(hero2.kills)
+  print(hero2.deaths)
 
-  hero = Hero('Wonder Woman')
-  weapon = Weapon('Lasso of Truth', 90)
-  hero.add_weapon(weapon)
-  print(hero.attack())
+
+  # hero = Hero('Wonder Woman')
+  # weapon = Weapon('Lasso of Truth', 90)
+  # hero.add_weapon(weapon)
+  # print(hero.attack())
