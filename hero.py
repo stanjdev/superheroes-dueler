@@ -43,10 +43,12 @@ class Hero:
       return
     fighting = True
     while fighting:
-      # NOT ENTIRELY ACCURATE. KEEP WORKING ON THIS: https://github.com/Tech-at-DU/Superhero-Team-Dueler/tree/master/P03-Adding-To-Our-Heroes#continue-to-test-it-out 
-      self.take_damage(opponent.attack())
-      opponent.take_damage(self.attack())
-      if not self.is_alive() or not opponent.is_alive():
+      self.take_damage(opponent.attack()) # decrement health
+      opponent.take_damage(self.attack()) # decrement health
+      if not self.is_alive() and not opponent.is_alive():
+        print('Draw! Both heroes are defeated.')
+        fighting = False
+      elif not self.is_alive() or not opponent.is_alive():
         winner = self.name if self.is_alive() else opponent.name
         print(self.name, self.current_health)
         print(opponent.name, opponent.current_health)
