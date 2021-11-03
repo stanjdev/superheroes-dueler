@@ -1,6 +1,7 @@
 import random
 from ability import Ability
 from armor import Armor
+from weapon import Weapon
 
 class Hero:
   def __init__(self, name, starting_health = 100):
@@ -9,6 +10,10 @@ class Hero:
     self.name = name
     self.starting_health = starting_health
     self.current_health = starting_health
+  
+  def add_weapon(self, weapon):
+    """ Add weapon to self.abilities """
+    self.abilities.append(weapon)
 
   def add_ability(self, ability):
     self.abilities.append(ability)
@@ -96,15 +101,19 @@ if __name__ == "__main__":
   # print(hero.current_health)
 
 
-  hero1 = Hero("Wonder Woman", 300)
-  hero2 = Hero("Dumbledore", 250)
-  ability1 = Ability("Super Speed", 300)
-  ability2 = Ability("Laser Eyes", 130)
-  ability3 = Ability("Wizard Wand", 180)
-  ability4 = Ability("Super Beard", 120)
-  hero1.add_ability(ability1)
-  hero1.add_ability(ability2)
-  hero2.add_ability(ability3)
-  hero2.add_ability(ability4)
-  hero1.fight(hero2)
+  # hero1 = Hero("Wonder Woman", 300)
+  # hero2 = Hero("Dumbledore", 250)
+  # ability1 = Ability("Super Speed", 300)
+  # ability2 = Ability("Laser Eyes", 130)
+  # ability3 = Ability("Wizard Wand", 180)
+  # ability4 = Ability("Super Beard", 120)
+  # hero1.add_ability(ability1)
+  # hero1.add_ability(ability2)
+  # hero2.add_ability(ability3)
+  # hero2.add_ability(ability4)
+  # hero1.fight(hero2)
 
+  hero = Hero('Wonder Woman')
+  weapon = Weapon('Lasso of Truth', 90)
+  hero.add_weapon(weapon)
+  print(hero.attack())
